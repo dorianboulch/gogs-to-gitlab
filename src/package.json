@@ -1,0 +1,16 @@
+{
+  "name": "issues-gogs-to-gitlab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gitlab": "^3.4.4",
+    "request": "latest",
+    "request-promise": "latest"
+  }
+}
