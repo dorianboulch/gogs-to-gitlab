@@ -13,6 +13,17 @@ function GogsApi(gogsParams) {
                 }
             });
         },
+        getRepo: function (repoUrl) {
+            return new Promise((async (resolve, reject) => {
+                try {
+                    let data = await this.get(`/repos/${repoUrl}`);
+                    let repo = JSON.parse(data);
+                    resolve(repo);
+                } catch (e) {
+                    reject(e);
+                }
+            }));
+        },
         getMilestones: function (repo) {
             return new Promise((async (resolve, reject) => {
                 try {

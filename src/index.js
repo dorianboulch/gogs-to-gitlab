@@ -61,10 +61,22 @@ function help(){
 }
 
 
-async function getGogsIssues() {
+async function getGogsRepo(repoUrl) {
+
+    try {
+        return await gogsApi.getRepo(repoUrl);
+    } catch (error) {
+        if (error.statusCode == '404') {
+            throw new Error(`Repo "${sourceRepo}" not found in gogs`);
+        }
+        throw new Error(error.message);
+    }
+}
+
+async function getGogsIssues(gogsRepo) {
     let gogsIssues;
     try {
-        gogsIssues = await gogsApi.getAllIssues(sourceRepo);
+        gogsIssues = await gogsApi.getAllIssues(gogsRepo.full_name);
     } catch (error) {
         if (error.statusCode == '404') {
             throw new Error(`Repo "${sourceRepo}" not found in gogs`);
@@ -75,12 +87,12 @@ async function getGogsIssues() {
     return gogsIssues;
 }
 
-async function getGogsLabels() {
-    return await gogsApi.getLabels(sourceRepo);
+async function getGogsLabels(gogsRepo) {
+    return await gogsApi.getLabels(gogsRepo.full_name);
 }
 
-async function getGogsMilestones() {
-    return await gogsApi.getMilestones(sourceRepo);
+async function getGogsMilestones(gogsRepo) {
+    return await gogsApi.getMilestones(gogsRepo.full_name);
 }
 
 async function getGitlabProject(targetRepo) {
@@ -174,15 +186,16 @@ async function run() {
 
     init();
 
+    let gogsRepo = await getGogsRepo(sourceRepo);
     let gitlabProject = await getGitlabProject(targetRepo);
 
-    let gogsMilestones = await getGogsMilestones();
+    let gogsMilestones = await getGogsMilestones(gogsRepo);
     await createMilestonesInGitlab(gitlabProject, gogsMilestones);
 
-    let gogsLabels = await getGogsLabels();
+    let gogsLabels = await getGogsLabels(gogsRepo);
     await createLabelsInGitlab(gitlabProject, gogsLabels);
 
-    let gogsIssues = await getGogsIssues();
+    let gogsIssues = await getGogsIssues(gogsRepo);
     await createIssuesInGitlab(gitlabProject, gogsIssues);
 
 }
@@ -190,6 +203,6 @@ async function run() {
 run().then(() => {
     process.exit(0)
 }).catch((err) => {
-    console.error(err);
+    console.error(err.message);
     process.exit(1);
 });
