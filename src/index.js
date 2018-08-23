@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const GogsApi = require('./GogsApi');
 const Gitlab = require('gitlab/dist/es5').default;
 const GogsToGitlabFormatters = require('./GogsToGitlabFormatters');

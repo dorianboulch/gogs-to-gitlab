@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "gitlab": "^3.4.4",
     "request": "latest",
     "request-promise": "latest"
