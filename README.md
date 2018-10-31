@@ -3,9 +3,15 @@
 This project aims to migrate Gogs issues to Gitlab.
 
 ## Usage
+Installation :
 ```bash
 cd src
 npm install
+cp .env.dist .env #Adjust the settings in the .env file
+```
+Run :
+```bash
+cd src
 node index.js your-repo-on-gogs your-repo-on-gitlab
 ```
 
