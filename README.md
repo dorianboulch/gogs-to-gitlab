@@ -12,7 +12,7 @@ cp .env.dist .env #Adjust the settings in the .env file
 Run :
 ```bash
 cd src
-node index.js your-repo-on-gogs your-repo-on-gitlab
+node index.js yourname/your-repo-on-gogs yourname/your-repo-on-gitlab
 ```
 
 ## Task
