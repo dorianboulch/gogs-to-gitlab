@@ -21,7 +21,8 @@ function init() {
         process.env.GOGS_URL == null ||
         process.env.GOGS_TOKEN == null
     ){
-        help();
+	help_params();
+        help_env();
         process.exit(1);
     }
 
@@ -43,7 +44,7 @@ function init() {
     const argv = process.argv.slice(2);
 
     if(argv.length !== 2){
-        help();
+        help_params();
         process.exit(1);
     }
 
@@ -51,13 +52,18 @@ function init() {
     targetRepo = argv[1];
 }
 
-function help(){
+function help_params(){
     console.error("Two paramters required : ${sourceRepository} ${targetRepository}");
+    console.error("but is: ", process.argv);
+}
+
+function help_env(){
     console.error("Env var required :");
     console.error("- GITLAB_URL");
     console.error("- GITLAB_TOKEN");
     console.error("- GOGS_URL");
     console.error("- GOGS_TOKEN");
+    console.error("but is: ", process.env);
 }
 
 
